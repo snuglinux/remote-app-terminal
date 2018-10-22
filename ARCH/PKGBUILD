@@ -6,7 +6,7 @@ arch=('any')
 url="https://github.com/snuglinux/install-snuglinux"
 license=('GPL2')
 depends=("openssl" "grep")
-source=("https://github.com/snuglinux/${pkgname}/archive/${pkgver}.tar.gz")
+source=("https://github.com/snuglinux/${pkgname}/archive/${pkgname}-${pkgver}.tar.gz")
 md5sums=('b3cbde2f8c9eee2c69449624385cbb57')
 
 package(){
