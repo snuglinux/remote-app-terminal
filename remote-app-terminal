@@ -1,0 +1,75 @@
+#!/bin/sh
+
+#source ~/.config/remote-app-terminal/remote-app-terminal.conf
+VAR_SERVER="$1"
+VAR_USER="$2"
+VAR_REMOTE_APP="$3"
+VAR_APP_ICON="$4"
+
+help(){
+zenity --info --title="help" \
+              --text="Парамерты:
+              1: сервер
+              2: пользователь
+              3: имя RemoteApp
+              4: app-icon" \
+              --width=250 --height=80
+}
+
+res=1
+ls -l "/bin/zenity"  > /dev/null 2>&1 && res=0
+if [ ${res} -ne 0 ] ; then
+   echo "Не установлен пакет zenity"
+   exit 1;
+fi
+ls -l "/bin/xfreerdp"  > /dev/null 2>&1 && res=0
+if [ ${res} -ne 0 ] ; then
+   zenity --error \
+          --text="Не установлен пакет xfreerdp" \
+          --no-wrap;
+   exit 1;
+fi
+if [ -z "$VAR_SERVER" ]; then
+   zenity --error \
+          --text="Не указан сервер!" \
+          --no-wrap;
+   help;
+   exit 1;
+fi
+if [ -z "$VAR_USER" ]; then
+   zenity --error \
+          --text="Не указан пользователь!" \
+          --no-wrap;
+   help;
+   exit 1;
+fi
+
+if [ -z "$VAR_REMOTE_APP" ]; then
+   zenity --error \
+          --text="Не указано имя RemoteApp!" \
+          --no-wrap;
+   help;
+   exit 1;
+fi
+
+eval SERVER=\$$VAR_SERVER
+if [ -z "$SERVER" ]; then
+   zenity --error \
+          --text="Сервер $VAR_SERVER не найден в конфигурации!" \
+          --no-wrap;
+   exit 1;
+fi
+PASSW=$( zenity  --entry --title="Проверка прав доступа" --text="Введите пароль для $VAR_SERVER:" \
+           --entry-text="" --hide-text );
+if [ -z "$PASSW" ]; then
+   zenity --error --text="Пароль не введён"
+else
+   xfreerdp /u:"$VAR_USER" /p:"$PASSW" /app:"||$VAR_REMOTE_APP" /v:"$SERVER" /bpp:15 /app-icon:"$VAR_APP_ICON"
+   ERROR=$?
+   if [ $ERROR -gt 11 ]; then
+      zenity --error \
+             --text="Ошибка $ERROR!" \
+             --no-wrap;
+      exit 1;
+   fi
+fi

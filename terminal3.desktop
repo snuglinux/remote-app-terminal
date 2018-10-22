@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=111
+Comment=
+Exec=remote-app-terminal SERVER3 USER1 1CV7
+Icon=preferences-desktop-remote-desktop
+Path=
+Terminal=false
+StartupNotify=true
+Name[ru_RU.UTF-8]=terminal3
+GenericName=terminal3
