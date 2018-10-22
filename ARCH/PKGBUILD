@@ -5,9 +5,10 @@ pkgdesc="Script to connect to the remote-app"
 arch=('any')
 url="https://github.com/snuglinux/install-snuglinux"
 license=('GPL2')
-depends=("openssl" "grep")
-source=("https://github.com/snuglinux/${pkgname}/archive/${pkgname}-${pkgver}.tar.gz")
-md5sums=('b3cbde2f8c9eee2c69449624385cbb57')
+depends=("freerdp" "zenity")
+source=("https://github.com/snuglinux/${pkgname}/archive/${pkgver}.tar.gz")
+backup=( "etc/remote-app-terminal.conf" )
+md5sums=('f40a7cda99deeaa39d93318729714116')
 
 package(){
   cd "$srcdir/${pkgname}-$pkgver"
@@ -20,10 +21,10 @@ package(){
   install -d "$pkgdir/usr/share/licenses/${pkgname}"
 
   # Copy files
-  install -m755 remote-app-terminal         "$pkgdir/usr/bin"
+  install -m755   remote-app-terminal       "$pkgdir/usr/bin"
   install -Dm 644 remote-app-terminal.conf  "$pkgdir/etc"
-  install -Dm terminal3.desktop             "$pkgdir/usr/share/remote-app-terminal"
-  install -m644 README.md                   "$pkgdir/usr/share/doc/${pkgname}/README"
+  install -Dm 644 terminal3.desktop         "$pkgdir/usr/share/remote-app-terminal"
+  install -m644   README.md                 "$pkgdir/usr/share/doc/${pkgname}/README"
   install -Dm 644 COPYING                   "$pkgdir/usr/share/licenses/${pkgname}/LICENSE"
 }
 
