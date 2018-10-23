@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#source ~/.config/remote-app-terminal/remote-app-terminal.conf
+source /etc/remote-app-terminal.conf
 VAR_SERVER="$1"
 VAR_USER="$2"
 VAR_REMOTE_APP="$3"
