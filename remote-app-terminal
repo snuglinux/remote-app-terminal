@@ -66,12 +66,144 @@ if [ -z "$PASSW" ]; then
 else
    xfreerdp /u:"$VAR_USER" /p:"$PASSW" /app:"||$VAR_REMOTE_APP" /v:"$SERVER" /bpp:15 /app-icon:"$VAR_APP_ICON"
    ERROR=$?
-   if [ $ERROR -eq 132 ]; then
+
+   if [ $ERROR -eq 1 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, отключено административным инструментом на сервере!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 2 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, вынужденный выход с помощью административного инструмента на сервере!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 3 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, истекает предельный таймер простоя сервера!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 4 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, истек срок действия активного таймера сервера!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 5 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, сессия была заменена!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 6 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, на сервере закончилась память!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 7 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, сервер отклонил соединение!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 8 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, сервер отказал в соединении по соображениям безопасности!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 9 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, соединение запрещено из-за недостаточных пользовательских привилегий!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 10 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, сервер требует новых учетных данных!" \
+             --no-wrap;
+      exit 1;
+  ## 11 пропустил
+   elif [ $ERROR -eq 16 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, произошла внутренняя ошибка лицензирования!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 17 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, отсутствует сервер лицензий!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 18 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, отсутствует действующая лицензия!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 19 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, недействительное лицензионное сообщение!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 20 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, лицензия клиентского доступа, сохраненная клиентом, была изменена!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 21 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, ошибка лицензии клиента" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 22 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, во время протокола лицензирования произошла ошибка сети!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 23 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, клиент преждевременно прекратил лицензионный протокол!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 24 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, лицензионное сообщение было неправильно зашифровано!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 25 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, лицензия клиентского доступа, хранящаяся у клиента, не может быть обновлена!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 26 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, сервер не имеет лицензии на прием удаленных подключений!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 32 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, установлен неверный протокол RDP!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 128 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, неверные параметры!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 129 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, клиенту недостаточно памяти!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 130 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, соединение завершено из-за ошибки протокола!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 131 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR, не удалось подключиться к удаленному хосту!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -eq 132 ]; then
       zenity --error \
              --text="Ошибка: $ERROR, неверный логин или пароль!" \
              --no-wrap;
       exit 1;
-   elif [ $ERROR -gt 11 ]; then
+   elif [ $ERROR -gt 0 ]; then
       zenity --error \
              --text="Ошибка: $ERROR!" \
              --no-wrap;
