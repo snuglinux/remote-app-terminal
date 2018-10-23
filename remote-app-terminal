@@ -66,9 +66,14 @@ if [ -z "$PASSW" ]; then
 else
    xfreerdp /u:"$VAR_USER" /p:"$PASSW" /app:"||$VAR_REMOTE_APP" /v:"$SERVER" /bpp:15 /app-icon:"$VAR_APP_ICON"
    ERROR=$?
-   if [ $ERROR -gt 11 ]; then
+   if [ $ERROR -eq 132 ]; then
       zenity --error \
-             --text="Ошибка $ERROR!" \
+             --text="Ошибка: $ERROR, неверный логин или пароль!" \
+             --no-wrap;
+      exit 1;
+   elif [ $ERROR -gt 11 ]; then
+      zenity --error \
+             --text="Ошибка: $ERROR!" \
              --no-wrap;
       exit 1;
    fi
